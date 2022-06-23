@@ -1,6 +1,5 @@
 local FridgeMod = {}
 
--- db = sqlite3.open_memory()
 function SetupSQL()
   if not db then
     db = sqlite3.open('fridgebean.sqlite3')
@@ -28,7 +27,7 @@ function FridgeDump()
   end
   getFridgeStmt:reset()
   -- getFridgeStmt:bind(1, id)
-  return getFridgeStmt:rows()
+  return getFridgeStmt--:rows()
 end
 function FridgeDbInit()
   if not db then
