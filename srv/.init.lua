@@ -1,13 +1,5 @@
 sqlite3 = require "lsqlite3"
-FridgeMod = require "FridgeMod"
+TempMod = require "TempMod"
 
 HidePath('/usr/share/zoneinfo/')
 HidePath('/usr/share/ssl/')
-
-function foo()
-  print("success!")
-end
-
-function bar()
-  foo()
-end

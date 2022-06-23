@@ -1,8 +1,8 @@
 #!/bin/sh
 
-cp -f ./redbean-stock.com ./fridgebean.com
-chmod +x ./fridgebean.com
-chmod u+wx ./fridgebean.com
+cp -f ./redbean-stock.com ./tempbean.com
+chmod +x ./tempbean.com
+chmod u+wx ./tempbean.com
 cd ./srv
-../zip.com -r ../fridgebean.com ./
+../zip.com -r ../tempbean.com ./
 cd ..
