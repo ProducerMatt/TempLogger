@@ -16,39 +16,54 @@ local function WriteForm(url)
        <a href="/"><img src="/redbean.png"></a>
        <a href="index.lua">temperature sensor tracker</a>
      </h1>
-     <form action="index.lua" method="post">
+     <form action="index.lua" method="post"
+         autocomplete="off">
        <input type="text" id="url" name="url" size="70"
               value="%s" placeholder="uri" autofocus>
        <input type="submit" value="fetch">
+       <input type="hidden" name="fetchclicked" value="true">
+     </form>
+     <form action="index.lua" method="post"
+         autocomplete="off">
+       <input type="submit" value="append">
+       <input type="hidden" name="appendclicked" value="true">
      </form>
    ]] % {EscapeHtml(url)})
 end
 
 local function main()
+   local DefaultTarget = "tempdump.lua"
    if IsPublicIp(GetClientAddr()) then
       ServeError(403)
    elseif GetMethod() == 'GET' or GetMethod() == 'HEAD' then
-      WriteForm("tempdump.lua")
+      WriteForm(DefaultTarget)
    elseif GetMethod() == 'POST' then
-      status, headers, payload = Fetch(GetParam('url'))
-      WriteForm(GetParam('url'))
-      Write('<dl>\r\n')
-      Write('<dt>Status\r\n')
-      Write('<dd><p>%d %s\r\n' % {status, GetHttpReason(status)})
-      Write('<dt>Headers\r\n')
-      Write('<dd>\r\n')
-      for k,v in pairs(headers) do
-         Write('<div class="hdr"><strong>')
-         Write(EscapeHtml(k))
-         Write('</strong>: ')
-         Write(EscapeHtml(v))
-         Write('</div>\r\n')
+      if GetParam('appendclicked') then
+         WriteForm(DefaultTarget)
+         Write('<dl>\r\n')
+         Write('<dt>DEBUG\r\n')
+         Write(tostring(EncodeJson(GetParams())))
+      elseif GetParam('fetchclicked') then
+         status, headers, payload = Fetch(GetParam('url'))
+         WriteForm(GetParam('url'))
+         Write('<dl>\r\n')
+         Write('<dt>Status\r\n')
+         Write('<dd><p>%d %s\r\n' % {status, GetHttpReason(status)})
+         Write('<dt>Headers\r\n')
+         Write('<dd>\r\n')
+         for k,v in pairs(headers) do
+            Write('<div class="hdr"><strong>')
+            Write(EscapeHtml(k))
+            Write('</strong>: ')
+            Write(EscapeHtml(v))
+            Write('</div>\r\n')
+         end
+         Write('<dt>Payload\r\n')
+         Write('<dd><pre>')
+         Write(EscapeHtml(VisualizeControlCodes(payload)))
+         Write('</pre>\r\n')
+         Write('</dl>\r\n')
       end
-      Write('<dt>Payload\r\n')
-      Write('<dd><pre>')
-      Write(EscapeHtml(VisualizeControlCodes(payload)))
-      Write('</pre>\r\n')
-      Write('</dl>\r\n')
    else
       ServeError(405)
       SetHeader('Allow', 'GET, HEAD, POST')
