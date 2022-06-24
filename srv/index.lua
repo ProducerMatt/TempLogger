@@ -39,10 +39,12 @@ local function main()
       WriteForm(DefaultTarget)
    elseif GetMethod() == 'POST' then
       if GetParam('appendclicked') then
-         WriteForm(DefaultTarget)
-         Write('<dl>\r\n')
-         Write('<dt>DEBUG\r\n')
-         Write(tostring(EncodeJson(GetParams())))
+         -- WriteForm(DefaultTarget) -- DEBUG
+         -- Write('<dl>\r\n')
+         -- Write('<dt>DEBUG\r\n')
+         -- Write(tostring(EncodeJson(GetParams())))
+         Write(tostring(TempAppend(tostring(GetDate()))))
+         -- NOTE: thank god this one's temporary
       elseif GetParam('fetchclicked') then
          status, headers, payload = Fetch(GetParam('url'))
          WriteForm(GetParam('url'))
