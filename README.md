@@ -5,7 +5,7 @@ I want to keep a log of the temperature of a faulty refrigerator.
 
 ### Required
 - Provide a webpage where user can look at a log of temperatures
-- Allow user to add new temperature entries, and new sensors those temps wre
+- Allow user to add new temperature entries, and new sensors those temps were
   recorded from.
 - Graph temperatures over time, with candles for min/max temperature change
 
