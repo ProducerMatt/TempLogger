@@ -2,7 +2,7 @@
 
 ## Objective
 I want to keep a log of the temperature of a faulty refrigerator.
-``
+
 ### Required
 - Provide a webpage where user can look at a log of temperatures
 - Allow user to add new temperature entries, and new sensors those temps wre
@@ -24,3 +24,9 @@ all new ground.
 Current status of the project: learning the basic technologies and how to
 connect them. Mostly frankedsteined from examples. So far I can read rows from
 the database to the browser, and add more.
+
+## How to use
+Run `./build.sh` to pack a redbean instance with the contents of `./srv/`. Once
+you launch the redbean be sure to initialize a DB with `TempDbInit()`. Launch it
+to play around with what's there (it's going to change a lot at this point).
+Expect ugliness. :-)
